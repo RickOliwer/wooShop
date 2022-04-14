@@ -1,9 +1,9 @@
 import Nav from "./nav";
 
-const Header = () => {
+const Header = ({headerMenu}) => {
     return (
-        <header>
-            <Nav />
+        <header className="bg-gray-800">
+            <Nav headerMenu={headerMenu} />
         </header>
     );
 }
