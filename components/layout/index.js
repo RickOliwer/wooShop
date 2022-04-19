@@ -4,7 +4,7 @@ import Header from "./header";
 import staticHeader from "../../data/header-static.json"
 
 const Layout = ({children}) => {
-    console.log('staticHeader ===>', staticHeader);
+
     return (
         <div>
             <Head>

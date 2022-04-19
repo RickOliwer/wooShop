@@ -1,22 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['wooshop.h.capacedev.se'],
+  },
+
+  webpack: (config, { dev, isServer }) => {
+    // Replace React with Preact only in client production build
+    if (!dev && !isServer) {
+      Object.assign(config.resolve.alias, {
+        react: 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
+      });
+    }
+    return config;
+  },
 }
 
 module.exports = nextConfig
-
-const path = require('path')
-module.exports = {
-	trailingSlash: false,
-	webpackDevMiddleware: config => {
-		config.watchOptions = {
-			poll: 1000,
-			aggregateTimeout: 300
-		}
-
-		return config
-	},
-	sassOptions: {
-		includePaths: [path.join(__dirname, 'styles')]
-	}
-}

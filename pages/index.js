@@ -1,14 +1,16 @@
-import { GET_HEADER } from "../src/queries/Layout/get-header.mjs"
-import wp from "../src/wordpress/wp"
+import Products from "../components/products/index.js";
+import { getProductsData } from "../src/utils/products.js";
 
-export default function Home({data}) {
-  console.log('the very data ===>', data);
+export default function Home({products}) {
+
   return (
     <>
       <main className="">
         <h1 className="text-3xl font-bold text-green-500 underline">
-          Hello world!
         </h1>
+          <div className="p-4 mx-auto">
+            <Products products={products} />
+          </div>
       </main>
     </>
 
@@ -16,11 +18,11 @@ export default function Home({data}) {
 }
 
 export const getStaticProps = async () => {
-  const { data } = await wp(GET_HEADER);
-
+  const {data: products} = await getProductsData()
   return {
     props: {
-      data: data || {}
-    }
+      products: products || {}
+    },
+    revalidate: 1,
   }
 }
