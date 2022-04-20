@@ -3,6 +3,7 @@ import { getProductsData } from "../src/utils/products.js";
 
 export default function Home({products}) {
 
+  console.log(products);
   return (
     <>
       <main className="">
