@@ -60,6 +60,23 @@ export const addToCart = ( productId, qty = 1, setCart, setIsAddedToCart, setLoa
 
 
 /**
+ * Get Formatted Cart Data.
+ *
+ * @param cartData
+ * @return {null|{cartTotal: {totalQty: number, totalPrice: number}, cartItems: ({length}|*|*[])}}
+ */
+ const getFormattedCartData = ( cartData ) => {
+	if ( ! cartData.length ) {
+		return null;
+	}
+	const cartTotal = calculateCartQtyAndPrice( cartData || [] );
+	return {
+		cartItems: cartData || [],
+		...cartTotal,
+	};
+};
+
+/**
  * Calculate Cart Qty And Price.
  *
  * @param cartItems
