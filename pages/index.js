@@ -6,13 +6,9 @@ export default function Home({products}) {
   console.log(products);
   return (
     <>
-      <main className="">
-        <h1 className="text-3xl font-bold text-green-500 underline">
-        </h1>
-          <div className="p-4 mx-auto">
+          <div className="">
             <Products products={products} />
           </div>
-      </main>
     </>
 
   )

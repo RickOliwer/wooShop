@@ -7,7 +7,7 @@ const Product = ( { product } ) => {
     const img = product?.images?.[0] ?? {};
     const productType = product?.type ?? '';
     return (
-        <div className="w-full px-2 my-2 overflow-hidden sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/4">
+        <div className="overflow-hidden">
 
         <Link href={`/${product?.slug}`}>
             <a>

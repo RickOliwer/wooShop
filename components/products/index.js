@@ -5,7 +5,7 @@ const Products = ({products}) => {
         return null
     }
     return (
-        <div className="flex flex-wrap -mx-2 overflow-hidden">
+        <div className="grid grid-cols-1 gap-10 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
 
             {products?.map((product) => {
                 
