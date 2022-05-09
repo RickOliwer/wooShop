@@ -1,4 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
+import { viewCart } from '../../src/utils/cart';
+import { getSession } from '../../src/utils/cart/session';
 export const AppContext = React.createContext([
 	{},
 	() => {}
@@ -18,6 +21,14 @@ export const AppProvider = ( props ) => {
 		}
 		
 	}, [] );
+
+	useEffect(() => {
+
+		const storedSession = getSession()
+		if(storedSession){
+			viewCart(setCart)
+		}
+	}, [])
 	
 
 	useEffect( () => {

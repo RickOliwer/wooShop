@@ -21,6 +21,7 @@ const Product = ( { product } ) => {
                 <h2 className="font-bold uppercase my-2 tracking-0.5px">{ product?.name ?? '' }</h2>
                 <div className="mb-4" dangerouslySetInnerHTML={{ __html: sanitize( product?.price_html ?? '' ) }}/>
                 <div>hell id:{product?.id}</div>
+                <div>stock_quantity:{product?.stock_quantity}</div>
             </a>
         </Link>
 

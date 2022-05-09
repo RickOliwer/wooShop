@@ -51,10 +51,83 @@ export const addToCart = ( productId, qty = 1, setCart, setIsAddedToCart, setLoa
 	
 	axios.get( CART_ENDPOINT, addOrViewCartConfig )
 		.then( ( res ) => {
-            console.log('res', res);
+			const formattedCartData = getFormattedCartData( res?.data ?? [] )
+            setCart(formattedCartData)
 		} )
 		.catch( err => {
             console.log('err', err);
+		} );
+};
+
+/**
+ * Update Cart Request Handler
+ */
+ export const updateCart = ( cartKey, qty = 1, setCart, setUpdatingProduct ) => {
+	
+	const addOrViewCartConfig = getApiCartConfig();
+	
+	setUpdatingProduct(true);
+	
+	axios.put( `${CART_ENDPOINT}${cartKey}`, {
+		quantity: qty,
+	}, addOrViewCartConfig )
+		.then( ( res ) => {
+			viewCart( setCart, setUpdatingProduct );
+			setUpdatingProduct(false);
+		} )
+		.catch( err => {
+			console.log( 'err', err );
+			setUpdatingProduct(false);
+		} );
+};
+
+/**
+ * Delete a cart item Request handler.
+ *
+ * Deletes all products in the cart of a
+ * specific product id ( by its cart key )
+ * In a cart session, each product maintains
+ * its data( qty etc ) with a specific cart key
+ *
+ * @param {String} cartKey Cart Key.
+ * @param {Function} setCart SetCart Function.
+ * @param {Function} setRemovingProduct Set Removing Product Function.
+ */
+export const deleteCartItem = ( cartKey, setCart, setRemovingProduct ) => {
+	
+	const addOrViewCartConfig = getApiCartConfig();
+	
+	setRemovingProduct(true);
+	
+	axios.delete( `${CART_ENDPOINT}${cartKey}`, addOrViewCartConfig )
+		.then( ( res ) => {
+			viewCart( setCart, setRemovingProduct );
+		} )
+		.catch( err => {
+			console.log( 'err', err );
+			setRemovingProduct(false);
+		} );
+};
+
+/**
+ * Clear Cart Request Handler
+ *
+ * @param {Function} setCart Set Cart
+ * @param {Function} setClearCartProcessing Set Clear Cart Processing.
+ */
+export const clearCart = ( setCart, setClearCartProcessing ) => {
+	
+	setClearCartProcessing(true);
+	
+	const addOrViewCartConfig = getApiCartConfig();
+	
+	axios.delete( CART_ENDPOINT, addOrViewCartConfig )
+		.then( ( res ) => {
+			viewCart( setCart, setClearCartProcessing )
+		} )
+		.catch( err => {
+			console.log( 'err', err );
+			setClearCartProcessing(false);
 		} );
 };
 
@@ -65,7 +138,7 @@ export const addToCart = ( productId, qty = 1, setCart, setIsAddedToCart, setLoa
  * @param cartData
  * @return {null|{cartTotal: {totalQty: number, totalPrice: number}, cartItems: ({length}|*|*[])}}
  */
- const getFormattedCartData = ( cartData ) => {
+ export const getFormattedCartData = ( cartData ) => {
 	if ( ! cartData.length ) {
 		return null;
 	}
